@@ -1,7 +1,8 @@
 plugins {
     id 'com.android.application'
 }
-
+apply plugin: 'com.android.application'
+apply plugin: 'com.google.gms.google-services'
 android {
     compileSdkVersion 30
     buildToolsVersion "30.0.3"
@@ -22,6 +23,11 @@ android {
             proguardFiles getDefaultProguardFile('proguard-android-optimize.txt'), 'proguard-rules.pro'
         }
     }
+    buildFeatures {
+        viewBinding{
+            enabled true
+        }
+    }
     compileOptions {
         sourceCompatibility JavaVersion.VERSION_1_8
         targetCompatibility JavaVersion.VERSION_1_8
@@ -36,4 +42,7 @@ dependencies {
     testImplementation 'junit:junit:4.+'
     androidTestImplementation 'androidx.test.ext:junit:1.1.3'
     androidTestImplementation 'androidx.test.espresso:espresso-core:3.4.0'
+
+    implementation platform('com.google.firebase:firebase-bom:28.4.2')
+    implementation 'com.google.firebase:firebase-analytics'
 }
