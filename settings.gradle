@@ -1,0 +1,2 @@
+rootProject.name = "Random video calling"
+include ':app'
