@@ -4,7 +4,7 @@ public class UserModel {
     private String Uid, name , profile, city;
 
 
-    private long coins;
+    long coins;
 
 
     public UserModel(){}
