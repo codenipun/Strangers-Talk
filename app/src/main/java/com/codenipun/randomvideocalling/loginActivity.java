@@ -3,18 +3,13 @@ package com.codenipun.randomvideocalling;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
-
 import android.content.Intent;
 import android.os.Bundle;
-import android.preference.PreferenceManager;
 import android.util.Log;
 import android.view.View;
 import android.widget.Toast;
-
-import com.codenipun.randomvideocalling.Activities.Models.UserModel;
-import com.codenipun.randomvideocalling.R;
+import com.codenipun.randomvideocalling.Models.UserModel;
 import com.codenipun.randomvideocalling.databinding.ActivityLoginBinding;
-import com.codenipun.randomvideocalling.databinding.ActivityStartingBinding;
 import com.google.android.gms.auth.api.signin.GoogleSignIn;
 import com.google.android.gms.auth.api.signin.GoogleSignInAccount;
 import com.google.android.gms.auth.api.signin.GoogleSignInClient;
@@ -81,7 +76,7 @@ public class loginActivity extends AppCompatActivity {
                     // Sign in success, update UI with the signed-in user's information
 //                    Log.d(TAG, "signInWithCredential:success");
                     FirebaseUser user = task.getResult().getUser();
-                    UserModel firebaseUser = new UserModel(user.getUid(), user.getDisplayName(), user.getPhotoUrl().toString(), "Unknown");
+                    UserModel firebaseUser = new UserModel(user.getUid(), user.getDisplayName(), user.getPhotoUrl().toString(), "Unknown", 500);
                     database.getReference().child("Profiles").child(user.getUid())
                             .setValue(firebaseUser).addOnCompleteListener(new OnCompleteListener<Void>() {
                         @Override

@@ -1,15 +1,20 @@
-package com.codenipun.randomvideocalling.Activities.Models;
+package com.codenipun.randomvideocalling.Models;
 
 public class UserModel {
     private String Uid, name , profile, city;
 
+
+    private long coins;
+
+
     public UserModel(){}
 
-    public UserModel(String uid, String name, String profile, String city) {
+    public UserModel(String uid, String name, String profile, String city, long coins) {
         Uid = uid;
         this.name = name;
         this.profile = profile;
         this.city = city;
+        this.coins = coins;
     }
 
     public String getUid() {
@@ -43,4 +48,13 @@ public class UserModel {
     public void setCity(String city) {
         this.city = city;
     }
+
+    public long getCoins() {
+        return coins;
+    }
+
+    public void setCoins(long coins) {
+        this.coins = coins;
+    }
+
 }
