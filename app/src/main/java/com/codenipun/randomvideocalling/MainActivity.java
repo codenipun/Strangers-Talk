@@ -5,6 +5,7 @@ import androidx.appcompat.app.AppCompatActivity;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.View;
 import android.widget.Toast;
 
@@ -57,13 +58,13 @@ public class MainActivity extends AppCompatActivity {
 
             }
         });
-
+//        Log.d("value of coins", "value ", coins)
         binding.findBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 if(coins>5){
-//                    startActivity(new Intent(MainActivity.this, CallingActivity.calss));
-                    Toast.makeText(MainActivity.this, "Finding Match.....", Toast.LENGTH_SHORT).show();
+                    startActivity(new Intent(MainActivity.this, connectingActivity.class));
+//                    Toast.makeText(MainActivity.this, "Finding Match.....", Toast.LENGTH_SHORT).show();
                 }else{
                     Toast.makeText(MainActivity.this, "Insufficient coins", Toast.LENGTH_SHORT).show();
                 }
