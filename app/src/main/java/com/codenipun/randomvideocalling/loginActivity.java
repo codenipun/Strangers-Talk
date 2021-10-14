@@ -9,7 +9,10 @@ import android.os.Bundle;
 import android.preference.PreferenceManager;
 import android.util.Log;
 import android.view.View;
+import android.widget.Toast;
 
+import com.codenipun.randomvideocalling.Activities.Models.UserModel;
+import com.codenipun.randomvideocalling.R;
 import com.codenipun.randomvideocalling.databinding.ActivityLoginBinding;
 import com.codenipun.randomvideocalling.databinding.ActivityStartingBinding;
 import com.google.android.gms.auth.api.signin.GoogleSignIn;
@@ -23,10 +26,14 @@ import com.google.firebase.auth.AuthResult;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.auth.GoogleAuthProvider;
+import com.google.firebase.database.FirebaseDatabase;
+
+import org.jetbrains.annotations.NotNull;
 
 public class loginActivity extends AppCompatActivity {
      ActivityLoginBinding binding;
      FirebaseAuth mAuth;
+     FirebaseDatabase database;
      GoogleSignInClient mGoogleSignInClient;
      int RC_SIGN_IN = 11;
 
@@ -38,6 +45,7 @@ public class loginActivity extends AppCompatActivity {
         setContentView(view);
 
         mAuth = FirebaseAuth.getInstance();
+        database = FirebaseDatabase.getInstance();
 
         GoogleSignInOptions gso = new GoogleSignInOptions.Builder(GoogleSignInOptions.DEFAULT_SIGN_IN)
                 .requestIdToken(getString(R.string.default_web_client_id)).requestEmail().build();
@@ -53,7 +61,6 @@ public class loginActivity extends AppCompatActivity {
             }
         });
     }
-
     @Override
     protected void onActivityResult(int requestCode, int resultCode, @Nullable @org.jetbrains.annotations.Nullable Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
@@ -74,6 +81,20 @@ public class loginActivity extends AppCompatActivity {
                     // Sign in success, update UI with the signed-in user's information
 //                    Log.d(TAG, "signInWithCredential:success");
                     FirebaseUser user = task.getResult().getUser();
+                    UserModel firebaseUser = new UserModel(user.getUid(), user.getDisplayName(), user.getPhotoUrl().toString(), "Unknown");
+                    database.getReference().child("Profiles").child(user.getUid())
+                            .setValue(firebaseUser).addOnCompleteListener(new OnCompleteListener<Void>() {
+                        @Override
+                        public void onComplete(@NonNull @NotNull Task<Void> task) {
+                            if(task.isSuccessful()){
+                                startActivity(new Intent(loginActivity.this, MainActivity.class));
+                                finishAffinity();
+                            }else{
+                                Toast.makeText( loginActivity.this, task.getException().getLocalizedMessage(), Toast.LENGTH_SHORT).show();
+                            }
+                        }
+                    });
+                    Log.e("profiles", user.getPhotoUrl().toString());
 
                 }else{
                     Log.e("err",task.getException().getLocalizedMessage());
