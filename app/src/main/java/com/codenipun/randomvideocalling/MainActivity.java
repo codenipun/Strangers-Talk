@@ -2,8 +2,12 @@ package com.codenipun.randomvideocalling;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.core.app.ActivityCompat;
 
+import android.Manifest;
+import android.app.ActivityManager;
 import android.content.Intent;
+import android.content.pm.PackageManager;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
@@ -28,6 +32,10 @@ public class MainActivity extends AppCompatActivity {
     FirebaseAuth auth;
     FirebaseDatabase firebaseDatabase;
     ActivityMainBinding binding;
+
+    String [] permission = new String[] {Manifest.permission.CAMERA, Manifest.permission.RECORD_AUDIO};
+    int requestCode = 3;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -62,13 +70,31 @@ public class MainActivity extends AppCompatActivity {
         binding.findBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                if(coins>5){
-                    startActivity(new Intent(MainActivity.this, connectingActivity.class));
-//                    Toast.makeText(MainActivity.this, "Finding Match.....", Toast.LENGTH_SHORT).show();
+                if(isPermissionGranted()) {
+                    if (coins > 5) {
+                        startActivity(new Intent(MainActivity.this, connectingActivity.class));
+                        //                    Toast.makeText(MainActivity.this, "Finding Match.....", Toast.LENGTH_SHORT).show();
+                    } else {
+                        Toast.makeText(MainActivity.this, "Insufficient coins", Toast.LENGTH_SHORT).show();
+                    }
                 }else{
-                    Toast.makeText(MainActivity.this, "Insufficient coins", Toast.LENGTH_SHORT).show();
+                    askPermission();
                 }
             }
         });
+    }
+
+
+    void askPermission(){
+        ActivityCompat.requestPermissions(this, permission, requestCode);
+    }
+
+    private boolean isPermissionGranted(){
+        for(String perm : permission){
+            if(ActivityCompat.checkSelfPermission(this, perm)!=PackageManager.PERMISSION_GRANTED){
+                return false;
+            }
+        }
+        return true;
     }
 }
