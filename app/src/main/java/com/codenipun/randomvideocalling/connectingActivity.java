@@ -52,6 +52,31 @@ public class connectingActivity extends AppCompatActivity {
                     public void onDataChange(@NonNull @NotNull DataSnapshot snapshot) {
                         if(snapshot.getChildrenCount()>0){
                             // Room is Available
+                            for(DataSnapshot childSnap : snapshot.getChildren()){
+                                database.getReference()
+                                        .child("Users")
+                                        .child(childSnap.getKey())
+                                        .child("incoming")
+                                        .setValue(username);
+                                database.getReference()
+                                        .child("Users")
+                                        .child(childSnap.getKey())
+                                        .child("Status")
+                                        .setValue(1);
+
+                                String incoming = childSnap.child("incoming").getValue(String.class);
+                                String createdBy = childSnap.child("createdBy").getValue(String.class);
+                                Boolean isAvailable = childSnap.child("isAvailable").getValue(Boolean.class);
+
+                                Intent intent = new Intent(connectingActivity.this, callingActivity.class);
+                                intent.putExtra("username", username);
+                                intent.putExtra("incoming", incoming);
+                                intent.putExtra("isAvailable", isAvailable);
+                                intent.putExtra("createdBy", createdBy);
+
+                                startActivity(intent);
+                                finish();
+                            }
                             Log.e("err", "room is available");
                         }else{
                             // Room is not Available and we need to create one for others to join
@@ -110,7 +135,6 @@ public class connectingActivity extends AppCompatActivity {
 
                     }
                 });
-
 
     }
 }
