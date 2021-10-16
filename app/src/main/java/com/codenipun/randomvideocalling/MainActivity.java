@@ -73,7 +73,7 @@ public class MainActivity extends AppCompatActivity {
                 if(isPermissionGranted()) {
                     if (coins > 5) {
                         startActivity(new Intent(MainActivity.this, connectingActivity.class));
-                        //                    Toast.makeText(MainActivity.this, "Finding Match.....", Toast.LENGTH_SHORT).show();
+                        // Toast.makeText(MainActivity.this, "Finding Match.....", Toast.LENGTH_SHORT).show();
                     } else {
                         Toast.makeText(MainActivity.this, "Insufficient coins", Toast.LENGTH_SHORT).show();
                     }
