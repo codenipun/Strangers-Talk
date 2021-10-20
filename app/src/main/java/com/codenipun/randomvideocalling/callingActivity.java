@@ -61,7 +61,7 @@ public class callingActivity extends AppCompatActivity {
 
         setUpWebView();
 
-        // lets setup our mic button
+        // lets setup our mic button state
         binding.micBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -77,7 +77,7 @@ public class callingActivity extends AppCompatActivity {
             }
         });
 
-        // lets setup video and its button
+        // lets setup video and its button state
         binding.videoBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -129,6 +129,8 @@ public class callingActivity extends AppCompatActivity {
                 super.onPageFinished(view, url);
 
                 initializePeers();
+
+
             }
         });
     }
@@ -136,7 +138,7 @@ public class callingActivity extends AppCompatActivity {
            callJavascriptFunction("javascript:init(\"" + uniqueId + "\"");
     }
 
-    // For calling javascript function in android we need to make a seperate function
+    // For calling javascript function in android we need to make a separate function
     void callJavascriptFunction(String function){
         binding.webView.post(new Runnable() {
             @RequiresApi(api = Build.VERSION_CODES.KITKAT)

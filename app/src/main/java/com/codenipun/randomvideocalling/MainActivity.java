@@ -58,7 +58,7 @@ public class MainActivity extends AppCompatActivity {
                 coins = userModel.getCoins();
 
                 binding.coins.setText(String.valueOf(coins));
-                Glide.with(MainActivity.this).load(userModel.getProfile()).into(binding.userProfile);
+                Glide.with(MainActivity.this).load(userModel.getProfile()).into(binding.img);
             }
 
             @Override
