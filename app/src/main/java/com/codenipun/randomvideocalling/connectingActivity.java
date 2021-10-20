@@ -26,6 +26,8 @@ public class connectingActivity extends AppCompatActivity {
     FirebaseAuth auth;
     FirebaseDatabase database;
 
+    boolean isOkay = false;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -51,6 +53,8 @@ public class connectingActivity extends AppCompatActivity {
                     @Override
                     public void onDataChange(@NonNull @NotNull DataSnapshot snapshot) {
                         if(snapshot.getChildrenCount()>0){
+                            isOkay = true;
+
                             // Room is Available
                             for(DataSnapshot childSnap : snapshot.getChildren()){
                                 database.getReference()
@@ -102,6 +106,11 @@ public class connectingActivity extends AppCompatActivity {
                                         public void onDataChange(@NonNull @NotNull DataSnapshot snapshot) {
                                             if(snapshot.child("Status").exists()){
                                                 if(snapshot.child("Status").getValue(Integer.class)==1){
+                                                    if(isOkay){
+                                                        return;
+                                                    }
+
+                                                    isOkay = true;
                                                     String incoming = snapshot.child("incoming").getValue(String.class);
                                                     String createdBy = snapshot.child("createdBy").getValue(String.class);
                                                     Boolean isAvailable = snapshot.child("isAvailable").getValue(Boolean.class);

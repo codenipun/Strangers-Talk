@@ -14,6 +14,6 @@ public class javaInterfaces {
 
     @JavascriptInterface
     public void onPeerConnected(){
-
+        callActivity.onPeerConnected();
     }
 }

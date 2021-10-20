@@ -1,22 +1,29 @@
 package com.codenipun.randomvideocalling;
 
+import androidx.annotation.NonNull;
 import androidx.annotation.RequiresApi;
 import androidx.appcompat.app.AppCompatActivity;
 
 import android.annotation.SuppressLint;
 import android.os.Build;
 import android.os.Bundle;
+import android.os.Handler;
 import android.view.View;
 import android.webkit.PermissionRequest;
 import android.webkit.WebChromeClient;
 import android.webkit.WebView;
 import android.webkit.WebViewClient;
+import android.widget.Toast;
 
+import com.bumptech.glide.Glide;
 import com.codenipun.randomvideocalling.Models.javaInterfaces;
 import com.codenipun.randomvideocalling.databinding.ActivityCallingBinding;
 import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.database.DataSnapshot;
+import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.database.ValueEventListener;
 
 public class callingActivity extends AppCompatActivity {
     FirebaseAuth auth;
@@ -42,17 +49,19 @@ public class callingActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         binding = ActivityCallingBinding.inflate(getLayoutInflater());
         setContentView(binding.getRoot());
-
         auth = FirebaseAuth.getInstance();
+
+        Glide.with(this).load(auth.getCurrentUser().getPhotoUrl()).into(binding.usersImage);
+
         uniqueId = auth.getUid();   // Another way to get unique id is to make unique id function which return UUID which works absolutely same
 
         firebaseRef = FirebaseDatabase.getInstance().getReference().child("Users");
 
-        username = getIntent().getStringExtra(username);
+        username = getIntent().getStringExtra("username");
 
-        incoming = getIntent().getStringExtra(incoming);
+        incoming = getIntent().getStringExtra("incoming");
 
-        createdBy = getIntent().getStringExtra(createdBy);
+        createdBy = getIntent().getStringExtra("createdBy");
 
         friendsUsername = "";
         if(incoming.equalsIgnoreCase(friendsUsername)){
@@ -66,7 +75,7 @@ public class callingActivity extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 isAudio = !isAudio;
-                callJavascriptFunction("javascript:toggleAudio(\""+isAudio+"\"");
+                callJavascriptFunction("javascript:toggleAudio(\""+isAudio+"\")");
 
                 //lets change the image for unmute
                 if(isAudio) {
@@ -82,13 +91,13 @@ public class callingActivity extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 isVideo = !isVideo;
-                callJavascriptFunction("javascript:toggleAudio(\""+isVideo+"\"");
+                callJavascriptFunction("javascript:toggleAudio(\""+isVideo+"\")");
 
                 //lets change the image for unmute
                 if(isVideo) {
-                    binding.micBtn.setImageResource(R.drawable.btn_video_normal);
+                    binding.videoBtn.setImageResource(R.drawable.btn_video_normal);
                 }else{
-                    binding.micBtn.setImageResource(R.drawable.btn_video_muted);
+                    binding.videoBtn.setImageResource(R.drawable.btn_video_muted);
                 }
             }
         });
@@ -100,7 +109,7 @@ public class callingActivity extends AppCompatActivity {
         binding.webView.setWebChromeClient(new WebChromeClient(){
             @Override
             public void onPermissionRequest(PermissionRequest request) {
-                super.onPermissionRequest(request);
+
                 if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
                     request.grant(request.getResources());
                 }
@@ -117,7 +126,7 @@ public class callingActivity extends AppCompatActivity {
     }
     public void loadVideoCall(){
         // here we will load the file call.html
-        String filepath = "file:android_assets/call.html";
+        String filepath = "file:android_asset/call.html";
 
         //now this filepath in webView
         binding.webView.loadUrl(filepath);
@@ -130,17 +139,93 @@ public class callingActivity extends AppCompatActivity {
 
                 initializePeers();
 
-
             }
         });
     }
     public void initializePeers(){
-           callJavascriptFunction("javascript:init(\"" + uniqueId + "\"");
+
+        callJavascriptFunction("javascript:init(\"" + uniqueId + "\")");
+
+        // now we need to add a check here to identify weather the room has been created by this user or his friend
+        // if he has created the room then must update the connection id otherwise his friend will update it
+        // because we need to connect both the peer with the same connection id only then our peer connection created
+        // so simple like that
+        if(createdBy.equalsIgnoreCase(username)){
+            firebaseRef.child(username)
+                       .child("connId")
+                       .setValue(uniqueId);
+            firebaseRef.child(username)
+                       .child("isAvailable")
+                       .setValue(true);
+            binding.controls.setVisibility(View.VISIBLE);
+        }else{
+            // friend is updating the connection id
+
+            // we are making to delayed by 2 sec so that thing will update and we don't have to face errors
+            new Handler().postDelayed(new Runnable() {
+                @Override
+                public void run() {
+                    friendsUsername = createdBy;
+                    FirebaseDatabase.getInstance().getReference()
+                           .child("Users")
+                           .child(friendsUsername)
+                           .child("connId").addListenerForSingleValueEvent(new ValueEventListener() {
+                            @Override
+                            public void onDataChange(@NonNull DataSnapshot snapshot) {
+                                if(snapshot.getValue() != null){
+                                    sendCallRequest();
+                                }
+                            }
+
+                            @Override
+                            public void onCancelled(@NonNull DatabaseError error) {
+
+                        }
+                    });
+
+                }
+            }, 2000);
+
+        }
+
+    }
+    public void onPeerConnected(){
+        isPeerConnected = true;
+    }
+
+    void sendCallRequest(){
+        if(!isPeerConnected){
+            Toast.makeText(this, "You are not connected, please check your Internet Connection", Toast.LENGTH_SHORT).show();
+        }else{
+            listenConnId();
+        }
+    }
+    void listenConnId(){
+        firebaseRef.child(friendsUsername).child("connId").addValueEventListener(new ValueEventListener() {
+            @Override
+            public void onDataChange(@NonNull DataSnapshot snapshot) {
+                if(snapshot.getValue()==null){
+                    return;
+                }else{
+                    binding.controls.setVisibility(View.VISIBLE);
+
+                    String connId = snapshot.getValue(String.class);
+
+                    callJavascriptFunction("javascript:startCall(\""+connId+"\")");
+                }
+            }
+
+            @Override
+            public void onCancelled(@NonNull DatabaseError error) {
+
+            }
+        });
     }
 
     // For calling javascript function in android we need to make a separate function
     void callJavascriptFunction(String function){
         binding.webView.post(new Runnable() {
+
             @RequiresApi(api = Build.VERSION_CODES.KITKAT)
             @Override
             public void run() {
