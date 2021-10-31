@@ -70,35 +70,38 @@ public class callingActivity extends AppCompatActivity {
 
         setUpWebView();
 
-        // lets setup our mic button state
+        // lets setup our video button state
+        binding.videoBtn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                isVideo = !isVideo;
+                callJavascriptFunction("javascript:toggleVideo(\""+isVideo+"\")");
+                if(isVideo){
+                    binding.videoBtn.setImageResource(R.drawable.btn_video_normal);
+                } else {
+                    binding.videoBtn.setImageResource(R.drawable.btn_video_muted);
+                }
+            }
+        });
+
+        // lets setup mic and its button state
         binding.micBtn.setOnClickListener(new View.OnClickListener() {
             @Override
-            public void onClick(View v) {
+            public void onClick(View view) {
                 isAudio = !isAudio;
                 callJavascriptFunction("javascript:toggleAudio(\""+isAudio+"\")");
-
-                //lets change the image for unmute
-                if(isAudio) {
+                if(isAudio){
                     binding.micBtn.setImageResource(R.drawable.btn_unmute_normal);
-                }else{
+                } else {
                     binding.micBtn.setImageResource(R.drawable.btn_mute_normal);
                 }
             }
         });
 
-        // lets setup video and its button state
-        binding.videoBtn.setOnClickListener(new View.OnClickListener() {
+        binding.callEndBtn.setOnClickListener(new View.OnClickListener() {
             @Override
-            public void onClick(View v) {
-                isVideo = !isVideo;
-                callJavascriptFunction("javascript:toggleAudio(\""+isVideo+"\")");
-
-                //lets change the image for unmute
-                if(isVideo) {
-                    binding.videoBtn.setImageResource(R.drawable.btn_video_normal);
-                }else{
-                    binding.videoBtn.setImageResource(R.drawable.btn_video_muted);
-                }
+            public void onClick(View view) {
+                finish();
             }
         });
     }
@@ -142,7 +145,7 @@ public class callingActivity extends AppCompatActivity {
             }
         });
     }
-    public void initializePeers(){
+    void initializePeers(){
 
         callJavascriptFunction("javascript:init(\"" + uniqueId + "\")");
 

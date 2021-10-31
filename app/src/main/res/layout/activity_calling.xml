@@ -29,7 +29,8 @@
             android:padding="4dp"
             app:civ_border_color="#FFFFFF"
             app:layout_constraintVertical_bias="0.136"
-            tools:src="@tools:sample/avatars"></de.hdodenhof.circleimageview.CircleImageView>
+            tools:src="@tools:sample/avatars">
+        </de.hdodenhof.circleimageview.CircleImageView>
 
         <LinearLayout
             android:layout_width="wrap_content"
@@ -70,7 +71,7 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
         app:layout_constraintVertical_bias="1.0"
-        android:visibility="invisible">
+        android:visibility="visible">
 
         <ImageView
             android:id="@+id/micBtn"
@@ -79,7 +80,7 @@
             android:layout_marginEnd="15dp"
             android:layout_marginRight="15dp"
             android:layout_weight="1"
-            app:srcCompat="@drawable/btn_mute_normal" />
+            app:srcCompat="@drawable/btn_unmute_normal" />
 
         <ImageView
             android:id="@+id/callEndBtn"
@@ -95,7 +96,7 @@
             android:layout_marginStart="15dp"
             android:layout_marginLeft="15dp"
             android:layout_weight="1"
-            app:srcCompat="@drawable/btn_video_muted" />
+            app:srcCompat="@drawable/btn_video_normal" />
 
     </LinearLayout>
 </androidx.constraintlayout.widget.ConstraintLayout>
