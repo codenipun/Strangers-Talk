@@ -161,7 +161,8 @@ public class callingActivity extends AppCompatActivity {
                        .child("isAvailable")
                        .setValue(true);
 
-            binding.loadingGroup.setVisibility(View.GONE);
+            binding.blurBackground.setVisibility(View.GONE);
+            binding.loadingAnimation.setVisibility(View.GONE);
             binding.controls.setVisibility(View.VISIBLE);
         }else{
             // friend is updating the connection id
@@ -189,7 +190,7 @@ public class callingActivity extends AppCompatActivity {
                     });
 
                 }
-            }, 3000);
+            }, 10000);
 
         }
 
@@ -213,7 +214,8 @@ public class callingActivity extends AppCompatActivity {
                     return;
                 }else{
 
-                    binding.loadingGroup.setVisibility(View.GONE);
+                    binding.blurBackground.setVisibility(View.GONE);
+                    binding.loadingAnimation.setVisibility(View.GONE);
                     binding.controls.setVisibility(View.VISIBLE);
 
                     String connId = snapshot.getValue(String.class);
@@ -221,7 +223,6 @@ public class callingActivity extends AppCompatActivity {
                     callJavascriptFunction("javascript:startCall(\""+connId+"\")");
                 }
             }
-
             @Override
             public void onCancelled(@NonNull DatabaseError error) {
 
