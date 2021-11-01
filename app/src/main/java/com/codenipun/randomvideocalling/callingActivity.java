@@ -16,7 +16,9 @@ import android.webkit.WebViewClient;
 import android.widget.Toast;
 
 import com.bumptech.glide.Glide;
+import com.codenipun.randomvideocalling.Models.UserModel;
 import com.codenipun.randomvideocalling.Models.javaInterfaces;
+
 import com.codenipun.randomvideocalling.databinding.ActivityCallingBinding;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.database.DataSnapshot;
@@ -24,6 +26,7 @@ import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
+import com.google.firebase.firestore.auth.User;
 
 public class callingActivity extends AppCompatActivity {
     FirebaseAuth auth;
@@ -154,6 +157,9 @@ public class callingActivity extends AppCompatActivity {
         // because we need to connect both the peer with the same connection id only then our peer connection created
         // so simple like that
         if(createdBy.equalsIgnoreCase(username)){
+            if(pageExit){
+                return;
+            }
             firebaseRef.child(username)
                        .child("connId")
                        .setValue(uniqueId);
@@ -164,6 +170,25 @@ public class callingActivity extends AppCompatActivity {
             binding.blurBackground.setVisibility(View.GONE);
             binding.loadingAnimation.setVisibility(View.GONE);
             binding.controls.setVisibility(View.VISIBLE);
+
+            FirebaseDatabase.getInstance().getReference()
+                    .child("Profiles")
+                    .child(friendsUsername)
+                    .addListenerForSingleValueEvent(new ValueEventListener() {
+                        @Override
+                        public void onDataChange(@NonNull DataSnapshot snapshot) {
+
+                            UserModel user = snapshot.getValue(UserModel.class);
+                            Glide.with(callingActivity.this).load(user.getProfile()).into(binding.peerImage);
+                            binding.peerName.setText(user.getName());
+                            binding.peerLocation.setText(user.getCity());
+                        }
+
+                        @Override
+                        public void onCancelled(@NonNull DatabaseError error) {
+
+                        }
+                    });
         }else{
             // friend is updating the connection id
 
@@ -172,6 +197,24 @@ public class callingActivity extends AppCompatActivity {
                 @Override
                 public void run() {
                     friendsUsername = createdBy;
+                    FirebaseDatabase.getInstance().getReference()
+                            .child("Profiles")
+                            .child(friendsUsername)
+                            .addListenerForSingleValueEvent(new ValueEventListener() {
+                                @Override
+                                public void onDataChange(@NonNull DataSnapshot snapshot) {
+
+                                    UserModel user = snapshot.getValue(UserModel.class);
+                                    Glide.with(callingActivity.this).load(user.getProfile()).into(binding.peerImage);
+                                    binding.peerName.setText(user.getName());
+                                    binding.peerLocation.setText(user.getCity());
+                                }
+
+                                @Override
+                                public void onCancelled(@NonNull DatabaseError error) {
+
+                                }
+                            });
                     FirebaseDatabase.getInstance().getReference()
                            .child("Users")
                            .child(friendsUsername)
@@ -240,5 +283,13 @@ public class callingActivity extends AppCompatActivity {
                 binding.webView.evaluateJavascript(function, null);
             }
         });
+    }
+
+    @Override
+    protected void onDestroy() {
+        super.onDestroy();
+        pageExit = true;
+        firebaseRef.child(createdBy).setValue(null);
+        finish();
     }
 }
