@@ -72,6 +72,12 @@ public class MainActivity extends AppCompatActivity {
             public void onClick(View v) {
                 if(isPermissionGranted()) {
                     if (coins > 5) {
+                        // update coins on every video call
+                        coins -= 5;
+                        firebaseDatabase.getReference()
+                                .child(currentUser.getUid())
+                                .child("coins")
+                                .setValue(coins);
                         startActivity(new Intent(MainActivity.this, connectingActivity.class));
                         // Toast.makeText(MainActivity.this, "Finding Match.....", Toast.LENGTH_SHORT).show();
                     } else {
