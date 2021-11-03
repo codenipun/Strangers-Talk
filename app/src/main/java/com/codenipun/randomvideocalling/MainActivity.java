@@ -58,7 +58,7 @@ public class MainActivity extends AppCompatActivity {
                 coins = userModel.getCoins();
 
                 binding.coins.setText(String.valueOf(coins));
-                Glide.with(MainActivity.this).load(userModel.getProfile()).into(binding.userProfile);
+                Glide.with(MainActivity.this).load(userModel.getProfile()).into(binding.img);
             }
 
             @Override
@@ -72,8 +72,14 @@ public class MainActivity extends AppCompatActivity {
             public void onClick(View v) {
                 if(isPermissionGranted()) {
                     if (coins > 5) {
+                        // update coins on every video call
+                        coins -= 5;
+                        firebaseDatabase.getReference()
+                                .child(currentUser.getUid())
+                                .child("coins")
+                                .setValue(coins);
                         startActivity(new Intent(MainActivity.this, connectingActivity.class));
-                        //                    Toast.makeText(MainActivity.this, "Finding Match.....", Toast.LENGTH_SHORT).show();
+                        // Toast.makeText(MainActivity.this, "Finding Match.....", Toast.LENGTH_SHORT).show();
                     } else {
                         Toast.makeText(MainActivity.this, "Insufficient coins", Toast.LENGTH_SHORT).show();
                     }
