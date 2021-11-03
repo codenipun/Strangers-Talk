@@ -54,7 +54,7 @@ public class callingActivity extends AppCompatActivity {
         setContentView(binding.getRoot());
         auth = FirebaseAuth.getInstance();
 
-        Glide.with(this).load(auth.getCurrentUser().getPhotoUrl()).into(binding.usersImage);
+//        Glide.with(this).load(auth.getCurrentUser().getPhotoUrl()).into(binding.peerImage);
 
         uniqueId = auth.getUid();   // Another way to get unique id is to make unique id function which return UUID which works absolutely same
 
@@ -66,10 +66,13 @@ public class callingActivity extends AppCompatActivity {
 
         createdBy = getIntent().getStringExtra("createdBy");
 
-        friendsUsername = "";
-        if(incoming.equalsIgnoreCase(friendsUsername)){
-            friendsUsername = incoming;
-        }
+//        friendsUsername = "";
+//        if(incoming.equalsIgnoreCase(friendsUsername)){
+//            friendsUsername = incoming;
+//        }
+
+        friendsUsername = incoming;
+
 
         setUpWebView();
 
@@ -167,28 +170,12 @@ public class callingActivity extends AppCompatActivity {
                        .child("isAvailable")
                        .setValue(true);
 
+                // Lets set the details of connected user
+                setConnectedUsersDetails();
+
             binding.blurBackground.setVisibility(View.GONE);
             binding.loadingAnimation.setVisibility(View.GONE);
             binding.controls.setVisibility(View.VISIBLE);
-
-            FirebaseDatabase.getInstance().getReference()
-                    .child("Profiles")
-                    .child(friendsUsername)
-                    .addListenerForSingleValueEvent(new ValueEventListener() {
-                        @Override
-                        public void onDataChange(@NonNull DataSnapshot snapshot) {
-
-                            UserModel user = snapshot.getValue(UserModel.class);
-                            Glide.with(callingActivity.this).load(user.getProfile()).into(binding.peerImage);
-                            binding.peerName.setText(user.getName());
-                            binding.peerLocation.setText(user.getCity());
-                        }
-
-                        @Override
-                        public void onCancelled(@NonNull DatabaseError error) {
-
-                        }
-                    });
         }else{
             // friend is updating the connection id
 
@@ -197,6 +184,9 @@ public class callingActivity extends AppCompatActivity {
                 @Override
                 public void run() {
                     friendsUsername = createdBy;
+
+                    setConnectedUsersDetails();
+
                     FirebaseDatabase.getInstance().getReference()
                             .child("Profiles")
                             .child(friendsUsername)
@@ -233,7 +223,7 @@ public class callingActivity extends AppCompatActivity {
                     });
 
                 }
-            }, 10000);
+            }, 3000);
 
         }
 
@@ -291,5 +281,28 @@ public class callingActivity extends AppCompatActivity {
         pageExit = true;
         firebaseRef.child(createdBy).setValue(null);
         finish();
+    }
+
+    void setConnectedUsersDetails(){
+        FirebaseDatabase.getInstance().getReference()
+                .child("Profiles")
+                .child(friendsUsername)
+                .addListenerForSingleValueEvent(new ValueEventListener() {
+                    @Override
+                    public void onDataChange(@NonNull DataSnapshot snapshot) {
+                        UserModel user = snapshot.getValue(UserModel.class);
+
+                        Glide.with(callingActivity.this).load(user.getProfile()).into(binding.peerImage);
+
+                        binding.peerName.setText(user.getName());
+                        binding.peerLocation.setText(user.getCity());
+                    }
+
+                    @Override
+                    public void onCancelled(@NonNull DatabaseError error) {
+
+
+                    }
+                });
     }
 }
