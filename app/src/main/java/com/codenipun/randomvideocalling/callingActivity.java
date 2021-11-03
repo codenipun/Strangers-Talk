@@ -283,6 +283,7 @@ public class callingActivity extends AppCompatActivity {
         finish();
     }
 
+
     void setConnectedUsersDetails(){
         FirebaseDatabase.getInstance().getReference()
                 .child("Profiles")
