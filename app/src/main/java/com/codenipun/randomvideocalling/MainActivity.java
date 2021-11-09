@@ -17,6 +17,9 @@ import com.bumptech.glide.Glide;
 import com.codenipun.randomvideocalling.Models.UserModel;
 import com.codenipun.randomvideocalling.R;
 import com.codenipun.randomvideocalling.databinding.ActivityMainBinding;
+import com.google.android.gms.ads.MobileAds;
+import com.google.android.gms.ads.initialization.InitializationStatus;
+import com.google.android.gms.ads.initialization.OnInitializationCompleteListener;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.database.DataSnapshot;
@@ -49,6 +52,13 @@ public class MainActivity extends AppCompatActivity {
         FirebaseUser currentUser = auth.getCurrentUser();
 
 
+        //For google AdMob
+        MobileAds.initialize(this, new OnInitializationCompleteListener() {
+            @Override
+            public void onInitializationComplete(InitializationStatus initializationStatus) {
+            }
+        });
+        
         firebaseDatabase.getReference().child("Profiles").child(currentUser.getUid()).addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull @NotNull DataSnapshot snapshot) {

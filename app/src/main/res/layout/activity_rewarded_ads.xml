@@ -113,6 +113,7 @@
             android:textColor="#fff">
         </TextView>
         <ImageView
+            android:id="@+id/video1_btn"
             android:layout_width="40dp"
             android:layout_height="20dp"
             android:layout_gravity="center"
@@ -149,6 +150,7 @@
             android:textColor="#fff">
         </TextView>
         <ImageView
+            android:id="@+id/video2_btn"
             android:layout_width="40dp"
             android:layout_height="20dp"
             android:layout_gravity="center"
@@ -185,6 +187,7 @@
             android:textColor="#fff">
         </TextView>
         <ImageView
+            android:id="@+id/video3_btn"
             android:layout_width="40dp"
             android:layout_height="20dp"
             android:layout_gravity="center"
@@ -221,6 +224,7 @@
             android:textColor="#fff">
         </TextView>
         <ImageView
+            android:id="@+id/video4_btn"
             android:layout_width="40dp"
             android:layout_height="20dp"
             android:layout_gravity="center"
@@ -257,6 +261,7 @@
             android:textColor="#fff">
         </TextView>
         <ImageView
+            android:id="@+id/video5_btn"
             android:layout_width="40dp"
             android:layout_height="20dp"
             android:layout_gravity="center"
