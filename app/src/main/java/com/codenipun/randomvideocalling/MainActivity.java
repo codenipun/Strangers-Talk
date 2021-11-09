@@ -85,9 +85,9 @@ public class MainActivity extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 if(isPermissionGranted()) {
-                    if (coins > 5) {
+                    if (coins > 10) {
                         // update coins on every video call
-                        coins -= 5;
+                        coins -= 10;
                         firebaseDatabase.getReference()
                                 .child("Profiles")
                                 .child(currentUser.getUid())
