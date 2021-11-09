@@ -46,6 +46,9 @@ public class MainActivity extends AppCompatActivity {
         View view = binding.getRoot();
         setContentView(view);
 
+        binding.progressBar.setVisibility(View.VISIBLE);
+        binding.group.setVisibility(View.INVISIBLE);
+
         auth = FirebaseAuth.getInstance();
         firebaseDatabase = FirebaseDatabase.getInstance();
 
@@ -58,11 +61,12 @@ public class MainActivity extends AppCompatActivity {
             public void onInitializationComplete(InitializationStatus initializationStatus) {
             }
         });
-        
+
         firebaseDatabase.getReference().child("Profiles").child(currentUser.getUid()).addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull @NotNull DataSnapshot snapshot) {
-
+                binding.progressBar.setVisibility(View.GONE);
+                binding.group.setVisibility(View.VISIBLE);
                 UserModel userModel = snapshot.getValue(UserModel.class);
 
                 coins = userModel.getCoins();
