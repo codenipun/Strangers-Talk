@@ -62,7 +62,7 @@
         app:layout_constraintVertical_bias="0.571">
 
         <TextView
-            android:id="@+id/coins"
+            android:id="@+id/currentCoins"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_gravity="center"
@@ -116,7 +116,7 @@
             android:layout_width="40dp"
             android:layout_height="20dp"
             android:layout_gravity="center"
-            android:src="@drawable/playbutton"
+            android:src="@drawable/ic_play"
             android:foregroundGravity="left">
         </ImageView>
     </LinearLayout>
@@ -152,7 +152,7 @@
             android:layout_width="40dp"
             android:layout_height="20dp"
             android:layout_gravity="center"
-            android:src="@drawable/playbutton"
+            android:src="@drawable/ic_play"
             android:foregroundGravity="left">
         </ImageView>
     </LinearLayout>
@@ -188,7 +188,7 @@
             android:layout_width="40dp"
             android:layout_height="20dp"
             android:layout_gravity="center"
-            android:src="@drawable/playbutton"
+            android:src="@drawable/ic_play"
             android:foregroundGravity="left">
         </ImageView>
     </LinearLayout>
@@ -224,7 +224,7 @@
             android:layout_width="40dp"
             android:layout_height="20dp"
             android:layout_gravity="center"
-            android:src="@drawable/playbutton"
+            android:src="@drawable/ic_play"
             android:foregroundGravity="left">
         </ImageView>
     </LinearLayout>
@@ -260,7 +260,7 @@
             android:layout_width="40dp"
             android:layout_height="20dp"
             android:layout_gravity="center"
-            android:src="@drawable/playbutton"
+            android:src="@drawable/ic_play"
             android:foregroundGravity="left">
         </ImageView>
     </LinearLayout>
