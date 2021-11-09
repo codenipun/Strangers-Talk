@@ -1,0 +1,272 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".RewardedAdsActivity">
+
+    <ImageView
+        android:id="@+id/imageView2"
+        android:layout_width="0dp"
+        android:layout_height="0dp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:srcCompat="@drawable/blur_backgrouind" />
+    <TextView
+        android:id="@+id/textView"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:fontFamily="@font/aclonica"
+        android:padding="10dp"
+        android:text="Stangers"
+        android:textColor="#292727"
+        android:textSize="25sp"
+        android:textStyle="normal|bold"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.0"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="0.0" />
+
+    <TextView
+        android:id="@+id/message"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="10dp"
+        android:fontFamily="@font/dancing_script"
+        android:text="Earn More Connect More"
+        android:textColor="#FAF7F7"
+        android:textSize="25dp"
+        android:textStyle="bold"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/textView">
+
+    </TextView>
+
+    <LinearLayout
+        android:id="@+id/linearLayout3"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+
+        android:background="@drawable/circular_bg"
+        android:orientation="horizontal"
+        app:layout_constraintBottom_toBottomOf="@+id/textView"
+        android:layout_marginRight="7dp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toTopOf="@+id/textView"
+        app:layout_constraintVertical_bias="0.571">
+
+        <TextView
+            android:id="@+id/currentCoins"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:layout_marginLeft="5dp"
+            android:layout_weight="1"
+            android:padding="2dp"
+            android:text="___"
+            android:textColor="#FFFFFF"
+            android:textSize="16sp"
+            android:textStyle="bold" />
+
+        <ImageView
+            android:id="@+id/coinsImage"
+            android:layout_width="20dp"
+            android:layout_height="20dp"
+            android:layout_gravity="center"
+            android:layout_marginRight="4dp"
+            android:layout_weight="1"
+            android:src="@drawable/dollar" />
+    </LinearLayout>
+
+    <LinearLayout
+        android:id="@+id/video1"
+        android:layout_width="300dp"
+        android:layout_height="40dp"
+        android:background="@drawable/circular_bg"
+        android:orientation="horizontal"
+        android:layout_marginTop="30dp"
+        android:elevation="100dp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/message">
+
+        <ImageView
+            android:layout_width="20dp"
+            android:layout_height="20dp"
+            android:layout_gravity="center"
+            android:layout_marginLeft="10dp"
+            android:src="@drawable/dollar" />
+
+        <TextView
+            android:layout_width="220dp"
+            android:layout_height="wrap_content"
+            android:text="10 Coins"
+            android:layout_marginLeft="5dp"
+            android:textSize="18sp"
+            android:layout_gravity="center"
+            android:textColor="#fff">
+        </TextView>
+        <ImageView
+            android:id="@+id/video1_btn"
+            android:layout_width="40dp"
+            android:layout_height="20dp"
+            android:layout_gravity="center"
+            android:src="@drawable/ic_play"
+            android:foregroundGravity="left">
+        </ImageView>
+    </LinearLayout>
+    <LinearLayout
+        android:id="@+id/video2"
+        android:layout_width="300dp"
+        android:layout_height="40dp"
+        android:background="@drawable/circular_bg"
+        android:orientation="horizontal"
+        android:layout_marginTop="20dp"
+        android:elevation="100dp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/video1">
+
+        <ImageView
+            android:layout_width="20dp"
+            android:layout_height="20dp"
+            android:layout_gravity="center"
+            android:layout_marginLeft="10dp"
+            android:src="@drawable/dollar" />
+
+        <TextView
+            android:layout_width="220dp"
+            android:layout_height="wrap_content"
+            android:text="50 Coins"
+            android:layout_marginLeft="5dp"
+            android:textSize="18sp"
+            android:layout_gravity="center"
+            android:textColor="#fff">
+        </TextView>
+        <ImageView
+            android:id="@+id/video2_btn"
+            android:layout_width="40dp"
+            android:layout_height="20dp"
+            android:layout_gravity="center"
+            android:src="@drawable/ic_play"
+            android:foregroundGravity="left">
+        </ImageView>
+    </LinearLayout>
+    <LinearLayout
+        android:id="@+id/video3"
+        android:layout_width="300dp"
+        android:layout_height="40dp"
+        android:background="@drawable/circular_bg"
+        android:orientation="horizontal"
+        android:layout_marginTop="20dp"
+        android:elevation="100dp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/video2">
+
+        <ImageView
+            android:layout_width="20dp"
+            android:layout_height="20dp"
+            android:layout_gravity="center"
+            android:layout_marginLeft="10dp"
+            android:src="@drawable/dollar" />
+
+        <TextView
+            android:layout_width="220dp"
+            android:layout_height="wrap_content"
+            android:text="100 Coins"
+            android:layout_marginLeft="5dp"
+            android:textSize="18sp"
+            android:layout_gravity="center"
+            android:textColor="#fff">
+        </TextView>
+        <ImageView
+            android:id="@+id/video3_btn"
+            android:layout_width="40dp"
+            android:layout_height="20dp"
+            android:layout_gravity="center"
+            android:src="@drawable/ic_play"
+            android:foregroundGravity="left">
+        </ImageView>
+    </LinearLayout>
+    <LinearLayout
+        android:id="@+id/video4"
+        android:layout_width="300dp"
+        android:layout_height="40dp"
+        android:background="@drawable/circular_bg"
+        android:orientation="horizontal"
+        android:layout_marginTop="20dp"
+        android:elevation="100dp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/video3">
+
+        <ImageView
+            android:layout_width="20dp"
+            android:layout_height="20dp"
+            android:layout_gravity="center"
+            android:layout_marginLeft="10dp"
+            android:src="@drawable/dollar" />
+
+        <TextView
+            android:layout_width="220dp"
+            android:layout_height="wrap_content"
+            android:text="200 Coins"
+            android:layout_marginLeft="5dp"
+            android:textSize="18sp"
+            android:layout_gravity="center"
+            android:textColor="#fff">
+        </TextView>
+        <ImageView
+            android:id="@+id/video4_btn"
+            android:layout_width="40dp"
+            android:layout_height="20dp"
+            android:layout_gravity="center"
+            android:src="@drawable/ic_play"
+            android:foregroundGravity="left">
+        </ImageView>
+    </LinearLayout>
+    <LinearLayout
+        android:id="@+id/video5"
+        android:layout_width="300dp"
+        android:layout_height="40dp"
+        android:background="@drawable/circular_bg"
+        android:orientation="horizontal"
+        android:layout_marginTop="20dp"
+        android:elevation="100dp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/video4">
+
+        <ImageView
+            android:layout_width="20dp"
+            android:layout_height="20dp"
+            android:layout_gravity="center"
+            android:layout_marginLeft="10dp"
+            android:src="@drawable/dollar" />
+
+        <TextView
+            android:layout_width="220dp"
+            android:layout_height="wrap_content"
+            android:text="500 Coins"
+            android:layout_marginLeft="5dp"
+            android:textSize="18sp"
+            android:layout_gravity="center"
+            android:textColor="#fff">
+        </TextView>
+        <ImageView
+            android:id="@+id/video5_btn"
+            android:layout_width="40dp"
+            android:layout_height="20dp"
+            android:layout_gravity="center"
+            android:src="@drawable/ic_play"
+            android:foregroundGravity="left">
+        </ImageView>
+    </LinearLayout>
+</androidx.constraintlayout.widget.ConstraintLayout>

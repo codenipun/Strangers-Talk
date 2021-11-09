@@ -17,6 +17,9 @@ import com.bumptech.glide.Glide;
 import com.codenipun.randomvideocalling.Models.UserModel;
 import com.codenipun.randomvideocalling.R;
 import com.codenipun.randomvideocalling.databinding.ActivityMainBinding;
+import com.google.android.gms.ads.MobileAds;
+import com.google.android.gms.ads.initialization.InitializationStatus;
+import com.google.android.gms.ads.initialization.OnInitializationCompleteListener;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.database.DataSnapshot;
@@ -43,16 +46,27 @@ public class MainActivity extends AppCompatActivity {
         View view = binding.getRoot();
         setContentView(view);
 
+        binding.progressBar.setVisibility(View.VISIBLE);
+        binding.group.setVisibility(View.INVISIBLE);
+
         auth = FirebaseAuth.getInstance();
         firebaseDatabase = FirebaseDatabase.getInstance();
 
         FirebaseUser currentUser = auth.getCurrentUser();
 
 
+        //For google AdMob
+        MobileAds.initialize(this, new OnInitializationCompleteListener() {
+            @Override
+            public void onInitializationComplete(InitializationStatus initializationStatus) {
+            }
+        });
+
         firebaseDatabase.getReference().child("Profiles").child(currentUser.getUid()).addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull @NotNull DataSnapshot snapshot) {
-
+                binding.progressBar.setVisibility(View.GONE);
+                binding.group.setVisibility(View.VISIBLE);
                 UserModel userModel = snapshot.getValue(UserModel.class);
 
                 coins = userModel.getCoins();
@@ -75,6 +89,7 @@ public class MainActivity extends AppCompatActivity {
                         // update coins on every video call
                         coins -= 5;
                         firebaseDatabase.getReference()
+                                .child("Profiles")
                                 .child(currentUser.getUid())
                                 .child("coins")
                                 .setValue(coins);
@@ -86,6 +101,12 @@ public class MainActivity extends AppCompatActivity {
                 }else{
                     askPermission();
                 }
+            }
+        });
+        binding.wallet.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                startActivity(new Intent(MainActivity.this, RewardedAdsActivity.class));
             }
         });
     }
