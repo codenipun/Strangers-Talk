@@ -75,6 +75,7 @@ public class MainActivity extends AppCompatActivity {
                         // update coins on every video call
                         coins -= 5;
                         firebaseDatabase.getReference()
+                                .child("Profiles")
                                 .child(currentUser.getUid())
                                 .child("coins")
                                 .setValue(coins);
@@ -86,6 +87,12 @@ public class MainActivity extends AppCompatActivity {
                 }else{
                     askPermission();
                 }
+            }
+        });
+        binding.wallet.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                startActivity(new Intent(MainActivity.this, RewardedAdsActivity.class));
             }
         });
     }

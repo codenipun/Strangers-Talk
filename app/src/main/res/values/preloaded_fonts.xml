@@ -2,8 +2,12 @@
 <resources>
     <array name="preloaded_fonts" translatable="false">
         <item>@font/aclonica</item>
+        <item>@font/aguafina_script</item>
+        <item>@font/allura</item>
         <item>@font/architects_daughter</item>
+        <item>@font/arizonia</item>
         <item>@font/bad_script</item>
+        <item>@font/dancing_script</item>
         <item>@font/roboto_bold_italic</item>
         <item>@font/roboto_light_italic</item>
     </array>
