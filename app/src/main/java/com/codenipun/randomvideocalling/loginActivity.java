@@ -3,6 +3,8 @@ package com.codenipun.randomvideocalling;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
+
+import android.app.ProgressDialog;
 import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
@@ -31,9 +33,11 @@ public class loginActivity extends AppCompatActivity {
      FirebaseDatabase database;
      GoogleSignInClient mGoogleSignInClient;
      int RC_SIGN_IN = 01;
-
+     private ProgressDialog pd;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
+        pd = new ProgressDialog(loginActivity.this,R.style.AppCompatAlertDialogStyle);
+        pd.setMessage("logging you in.......");
         super.onCreate(savedInstanceState);
         binding = ActivityLoginBinding.inflate(getLayoutInflater());
         View view = binding.getRoot();
@@ -51,6 +55,7 @@ public class loginActivity extends AppCompatActivity {
         binding.gSiBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+//                pd.show();
                 Intent intent = mGoogleSignInClient.getSignInIntent();
                 startActivityForResult(intent, RC_SIGN_IN);
             }
@@ -68,6 +73,7 @@ public class loginActivity extends AppCompatActivity {
     }
 
     void authWithGoogle(String idToken){
+        pd.show();
         AuthCredential credential = GoogleAuthProvider.getCredential(idToken, null);
         mAuth.signInWithCredential(credential).addOnCompleteListener(new OnCompleteListener<AuthResult>() {
             @Override
@@ -75,6 +81,7 @@ public class loginActivity extends AppCompatActivity {
                 if(task.isSuccessful()){
                     // Sign in success, update UI with the signed-in user's information
 //                    Log.d(TAG, "signInWithCredential:success");
+
                     FirebaseUser user = task.getResult().getUser();
                     UserModel firebaseUser = new UserModel(user.getUid(), user.getDisplayName(), user.getPhotoUrl().toString(), "Unknown", 500);
                     database.getReference().child("Profiles").child(user.getUid())
@@ -82,6 +89,7 @@ public class loginActivity extends AppCompatActivity {
                         @Override
                         public void onComplete(@NonNull @NotNull Task<Void> task) {
                             if(task.isSuccessful()){
+                                pd.dismiss();
                                 startActivity(new Intent(loginActivity.this, MainActivity.class));
                                 finishAffinity();
                             }else{
