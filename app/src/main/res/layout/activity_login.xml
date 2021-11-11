@@ -4,23 +4,58 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".loginActivity">
+    tools:context=".loginActivity"
+    android:background="@drawable/blur_backgrouind">
+
+    <TextView
+        android:id="@+id/logoText"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:fontFamily="@font/dancing_script"
+        android:padding="10dp"
+        android:text="Strangers Talk"
+        android:textColor="#000000"
+        android:textSize="30sp"
+        android:textStyle="bold"
+
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.0"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <ImageView
+        android:id="@+id/imageView3"
+        android:layout_width="300dp"
+        android:layout_height="300dp"
+        android:layout_marginTop="144dp"
+
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.495"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/logoText"
+        app:srcCompat="@drawable/stranger" />
 
     <LinearLayout
         android:id="@+id/gSiBtn"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:background="@drawable/circular_bg"
+        android:backgroundTint="#B5BDD8"
         android:orientation="horizontal"
+        android:padding="6dp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent">
+
+        app:layout_constraintTop_toBottomOf="@+id/imageView3"
+        app:layout_constraintVertical_bias="0.735">
 
         <ImageView
             android:id="@+id/imageView"
-            android:layout_width="40dp"
-            android:layout_height="40dp"
+            android:layout_width="30dp"
+            android:layout_height="30dp"
             android:layout_gravity="center"
+            android:layout_marginLeft="3dp"
             app:srcCompat="@drawable/search" />
 
         <TextView
@@ -29,9 +64,11 @@
             android:layout_height="wrap_content"
             android:layout_gravity="center"
             android:layout_weight="1"
-            android:padding="8dp"
-            android:text="Sign-In with Google"
-            android:textSize="20sp" />
+            android:layout_marginLeft="3dp"
+            android:layout_marginRight="3dp"
+            android:text="Continue with Google"
+            android:textSize="17sp"
+            android:textColor="@color/black"/>
 
     </LinearLayout>
 
