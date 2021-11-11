@@ -30,7 +30,7 @@ public class loginActivity extends AppCompatActivity {
      FirebaseAuth mAuth;
      FirebaseDatabase database;
      GoogleSignInClient mGoogleSignInClient;
-     int RC_SIGN_IN = 11;
+     int RC_SIGN_IN = 01;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -86,6 +86,7 @@ public class loginActivity extends AppCompatActivity {
                                 finishAffinity();
                             }else{
                                 Toast.makeText( loginActivity.this, task.getException().getLocalizedMessage(), Toast.LENGTH_SHORT).show();
+
                             }
                         }
                     });
