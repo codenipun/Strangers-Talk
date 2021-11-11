@@ -66,10 +66,8 @@
             android:layout_weight="1"
             android:layout_marginLeft="3dp"
             android:layout_marginRight="3dp"
-            android:text="Continue with Google"
+            android:text="Login with Google"
             android:textSize="17sp"
             android:textColor="@color/black"/>
-
     </LinearLayout>
-
 </androidx.constraintlayout.widget.ConstraintLayout>
