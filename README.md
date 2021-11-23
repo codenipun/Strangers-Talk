@@ -7,5 +7,5 @@
 
 Installation guidance for Android devices:
 </br>
-- cilck on this link : https://drive.google.com/file/d/1-2I2xUgxtw-2fiiXJrumKs7F9rOqBDXR/view?usp=drivesdk
+- cilck on this link : https://drive.google.com/file/d/1lyBytzxBX5gkw2H68CeccEgO-TgmsLYZ/view?usp=sharing
 - Make your device setting so that it will allow to install via package installer
